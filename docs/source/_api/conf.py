@@ -12,7 +12,7 @@
 #
 # import os
 # import sys
-# sys.path.insert(0, '/Users/Dave/git_repos/_templates_/python_package/xxxpython_package_namexxx')
+# sys.path.insert(0, '/Users/Dave/git_repos/_templates_/python-package-template/xxxpython_package_namexxx')
 
 
 # -- Project information -----------------------------------------------------
