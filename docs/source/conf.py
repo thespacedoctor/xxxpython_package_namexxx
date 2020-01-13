@@ -55,6 +55,7 @@ source_parsers = {
     '.md': 'recommonmark.parser.CommonMarkParser'
 }
 
+master_doc = 'index'
 
 # General information about the project.
 
