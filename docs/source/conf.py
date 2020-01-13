@@ -35,7 +35,7 @@ exec(open(moduleDirectory + "/../../xxxpython_package_namexxx/__version__.py").r
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-              'sphinx.ext.mathjax', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary', 'sphinx.ext.graphviz', 'recommonmark', 'sphinx_search.extension']
+              'sphinx.ext.mathjax', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary', 'sphinx.ext.graphviz', 'recommonmark']
 
 # Generate Summaries
 autosummary_generate = True
