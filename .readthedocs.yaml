@@ -15,6 +15,7 @@ python:
   install:
     - method: setuptools
       path: .
+    - requirements: docs/requirements.txt
 
 submodules:
   include: all
