@@ -16,6 +16,8 @@ from datetime import datetime, date, time
 # -- General configuration -----------------------------------------------
 # Fake modules requring C-Libraries
 from mock import Mock as MagicMock
+# import recommonmark
+# from recommonmark.transform import AutoStructify
 
 
 class Mock(MagicMock):
@@ -35,8 +37,9 @@ exec(open(moduleDirectory + "/../../xxxpython_package_namexxx/__version__.py").r
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-              'sphinx.ext.mathjax', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary', 'sphinx.ext.graphviz', 'recommonmark']
+              'sphinx.ext.mathjax', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary', 'sphinx.ext.graphviz', 'sphinx.ext.autosectionlabel']
 
+autosectionlabel_prefix_document = True
 # Generate Summaries
 autosummary_generate = True
 
@@ -47,13 +50,7 @@ todo_include_todos = True
 templates_path = ['_templates']
 
 # The suffix of source filenames.
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
-# source_parsers = {
-#     '.md': 'recommonmark.parser.CommonMarkParser'
-# }
+source_suffix = ['.rst', '.md']
 
 master_doc = 'index'
 
@@ -450,3 +447,31 @@ autosummaryText = generateAutosummaryIndex()
 rst_epilog = u"""
 .. |tsd| replace:: thespacedoctor
 """ % locals()
+
+
+# app setup hook
+
+github_doc_root = 'https://github.com/thespacedoctor/python-package-template/tree/master/docs/'
+
+
+from sphinx_markdown_parser.parser import MarkdownParser
+
+
+def setup(app):
+    app.add_source_suffix('.md', 'markdown')
+    app.add_source_parser(MarkdownParser)
+    app.add_config_value('markdown_parser_config', {
+        'auto_toc_tree_section': 'Content',
+        'enable_auto_doc_ref': True,
+        'enable_auto_toc_tree': True,
+        'enable_eval_rst': True,
+        'extensions': [
+            'extra',
+            'nl2br',
+            'sane_lists',
+            'smarty',
+            'toc',
+            'wikilinks',
+            'pymdownx.arithmatex',
+        ],
+    }, True)
