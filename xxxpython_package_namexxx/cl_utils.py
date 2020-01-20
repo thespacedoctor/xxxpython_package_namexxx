@@ -23,7 +23,6 @@ import pickle
 from docopt import docopt
 from fundamentals import tools, times
 from subprocess import Popen, PIPE, STDOUT
-# from ..__init__ import *
 
 
 def tab_complete(text, state):

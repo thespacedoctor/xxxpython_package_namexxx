@@ -74,7 +74,7 @@ class utKit(utKit):
 
     def refresh_database(self):
         """
-        Refresh the unit test database
+        *Refresh the unit test database*
         """
         from fundamentals.mysql import directory_script_runner
         from fundamentals import tools
