@@ -23,13 +23,7 @@ xxxpython_package_namexxx.commonutils (*subpackage*)
         
         
         
-        
-            
-                ~getpackagepath
-           
-        
     
-        
         
         
         

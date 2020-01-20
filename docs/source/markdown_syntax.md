@@ -99,9 +99,9 @@ term
 
 ## Transclusion
 
-If MMD transclusion is working you will see install instructions here:
+If MMD transclusion is working you will see usage instructions here:
 
-{{_includes/installation.md}}
+{{usage.md}}
 
 If iA transclusion is working you will see a unicorn here:
 

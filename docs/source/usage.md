@@ -1,8 +1,8 @@
-Command-Line Usage
-==================
 
-.. code-block:: bash 
-   
+
+# Command-Line Usage
+
+```bash 
     
     Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_package_namexxx.readthedocs.org/en/stable
     
@@ -16,3 +16,5 @@ Command-Line Usage
         -v, --version                          show version
         -s, --settings <pathToSettingsFile>    the settings file
     
+
+```

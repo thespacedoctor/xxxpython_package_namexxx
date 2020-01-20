@@ -84,7 +84,7 @@ latex_documents = [
 latex_logo = "_images/thespacedoctor_icon_dark.png"
 
 markdown_parser_config = {
-    'auto_toc_tree_section': 'Content',
+    'auto_toc_maxdepth': 4,
     'enable_auto_toc_tree': True,
     'enable_eval_rst': True,
     'enable_inline_math': True,
@@ -124,7 +124,7 @@ markdown_parser_config = {
 }
 
 
-def updateUsageRST():
+def updateUsageMd():
     """
     *Grab the usage from cl_utils.py to display in README.md*
     """
@@ -137,21 +137,20 @@ def updateUsageRST():
     for l in usage.split("\n"):
         usageString += "    " + l + "\n"
 
-    usage = """Command-Line Usage
-==================
+    usage = """
 
-.. code-block:: bash 
-   
-%(usageString)s""" % locals()
+# Command-Line Usage
+
+```bash 
+%(usageString)s
+```
+""" % locals()
 
     moduleDirectory = os.path.dirname(__file__)
-    uFile = moduleDirectory + "/_includes/usage.rst"
-    exists = os.path.exists(uFile)
-    if exists:
-        import codecs
-        writeFile = codecs.open(uFile, encoding='utf-8', mode='w')
-        writeFile.write(usage)
-        writeFile.close()
+    uFile = moduleDirectory + "/usage.md"
+    writeFile = codecs.open(uFile, encoding='utf-8', mode='w')
+    writeFile.write(usage)
+    writeFile.close()
 
     return None
 
@@ -395,9 +394,6 @@ def docstring(app, what, name, obj, options, lines):
     for line in rst.split("\n"):
         lines.append(line)
 
-    if "docstring" in name:
-        print(rst)
-
 
 def setup(app):
     app.connect('autodoc-process-docstring', docstring)
@@ -408,5 +404,5 @@ def setup(app):
     app.add_transform(AutoStructify)
 
 # DO THE WORK
-updateUsageRST()
+updateUsageMd()
 autosummaryText = generateAutosummaryIndex()
