@@ -1,5 +1,5 @@
 .. xxxpython_package_namexxx documentation master file, created by
-   sphinx-quickstart on Mon Jan 13 12:52:27 2020.
+   sphinx-quickstart on Sun Jan 19 07:42:05 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 

@@ -3,9 +3,26 @@ category: template durable dynamic
 
 # Multimarkdown Rendering Test Document
 
-## Table of Contents
+**Table of Contents**
 
 {{TOC}}
+
+## AutoStructify
+
+* [Link to Index File](index.md)
+* [Link to Installation File](installation.md)
+
+## Embed reStructuredText
+
+```eval_rst
+.. todo::
+
+    - nice!
+```
+
+## Code URL Resolver
+
+I can link to my [setup.py file on github](../../../setup.py)
 
 ## Code and Syntax Highlighting
 
@@ -82,9 +99,9 @@ term
 
 ## Transclusion
 
-If MMD transclusion is working you will see a unicorn here:
+If MMD transclusion is working you will see install instructions here:
 
-{{multimarkdown_transclusion_test_20190121111324.md}}
+{{_includes/installation.md}}
 
 If iA transclusion is working you will see a unicorn here:
 
@@ -155,6 +172,8 @@ Link to [Intro].
 
 Link to the [end][fin].
 
+Link to [Task Lists](#task-lists)
+
 ## Task Lists
 
 - [x] Completed task item
@@ -162,9 +181,7 @@ Link to the [end][fin].
 
 ## Footnote
 
-Here's a sentence with a footnote[^z101] in the middle of it!
-
-Text.[^This is an inline footnote.]
+Here's a sentence with a footnote[^1] in the middle of it!
 
 ## Headers
     
@@ -177,9 +194,12 @@ Text.[^This is an inline footnote.]
 
 ## Emphasis
     
-Emphasis, aka italics, with *asterisks* or _underscores_.  
-Strong emphasis, aka bold, with **asterisks** or __underscores__.  
-Strikethrough uses two tildes. ~~Scratch this.~~  
+Emphasis, aka italics, with *asterisks* or _underscores_.     
+Strong emphasis, aka bold, with **asterisks** or __underscores__.      
+Strikethrough uses two tildes. ~~Scratch this.~~     
+
+Add highlight uses two equals ==highlight==     
+
 
 ## Lists
 
@@ -254,6 +274,13 @@ You can also use raw HTML in your Markdown, and it'll mostly work pretty well.
   <dt>Markdown in HTML</dt>
   <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
 </dl>
+
+## Abbreviations
+
+The HTML specification is maintained by the W3C.
+
+*[HTML]: Hyper Text Markup Language
+*[W3C]:  World Wide Web Consortium
     
 
 ## Horizontal Rule
@@ -264,6 +291,5 @@ Three or more...
 
 Hyphens
 
-
-[^z101]: This is the footnote.
+[^1]: This is the footnote.
 

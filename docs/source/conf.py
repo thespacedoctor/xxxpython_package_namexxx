@@ -3,237 +3,131 @@
 from builtins import str
 import sys
 import os
-from xxxpython_package_namexxx import cl_utils
 from datetime import datetime, date, time
-# -- Allow Markdown -----------------------------------------------------
-# source_suffix = ['.rst', '.md']
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-# sys.path.insert(0, os.path.abspath('.'))
-
-# -- General configuration -----------------------------------------------
-# Fake modules requring C-Libraries
+from xxxpython_package_namexxx import cl_utils
 from mock import Mock as MagicMock
-# import recommonmark
-# from recommonmark.transform import AutoStructify
+import re
+from sphinx_markdown_parser.parser import MarkdownParser, CommonMarkParser
+from sphinx_markdown_parser.transform import AutoStructify
+import m2r
+import codecs
+
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo',
+              'sphinx.ext.mathjax', 'sphinx.ext.autosummary', 'sphinx.ext.coverage', 'sphinx.ext.linkcode']
 
 
 class Mock(MagicMock):
-
+    """AVOID INSTALLING THESE C-DEPENDENT PACKAGES"""
     @classmethod
     def __getattr__(cls, name):
         return Mock()
-
 MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.colors',
                 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 
+# WHERE DOES THIS conf.py FILE LIVE?
 moduleDirectory = os.path.dirname(os.path.realpath(__file__))
+# GET PACKAGE __version__ INTO locals()
 exec(open(moduleDirectory + "/../../xxxpython_package_namexxx/__version__.py").read())
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-              'sphinx.ext.mathjax', 'sphinx.ext.viewcode', 'sphinx.ext.autosummary', 'sphinx.ext.graphviz', 'sphinx.ext.autosectionlabel']
 
-autosectionlabel_prefix_document = True
-# Generate Summaries
 autosummary_generate = True
-
-# Show Todos
+autodoc_member_order = 'bysource'
 todo_include_todos = True
-
-# Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
-# The suffix of source filenames.
 source_suffix = ['.rst', '.md']
-
 master_doc = 'index'
+pygments_style = 'monokai'
+html_theme = 'sphinx_rtd_theme'
+html_logo = "_images/thespacedoctor_icon_white_circle.png"
+html_favicon = "_images/favicon.ico"
+html_show_sourcelink = True
+# html_theme_options = {}
+# html_theme_path = []
+# html_title = None
+# html_short_title = None
+# html_sidebars = {}
+# html_last_updated_fmt = '%b %d, %Y'
+# html_additional_pages = {}
+html_show_copyright = True
+html_show_sphinx = True
+html_add_permalinks = u"  ∞"
+html_static_path = ['_static']
+html_file_suffix = None
+trim_footnote_reference_space = True
+# Add substitutions here
+rst_epilog = u"""
+.. |tsd| replace:: thespacedoctor
+""" % locals()
+link_resolver_url = "https://github.com/thespacedoctor/python-package-template/tree/master"
+
 
 # General information about the project.
-
 now = datetime.now()
 now = now.strftime("%Y")
 project = u'xxxpython_package_namexxx'
 copyright = u'%(now)s, Dave Young' % locals()
-
-
 version = "v" + str(__version__)
 release = version
 today_fmt = '%Y'
 
-pygments_style = 'monokai'
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
 exclude_patterns = ['_build', '_templates',
                     '**__version__.py', '**setup.py', 'api/xxxpython_package_namexxx.rst']
-# A list of ignored prefixes for module index sorting.
 modindex_common_prefix = ["xxxpython_package_namexxx."]
 
-
-# -- Options for HTML output ---------------------------------------------
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-# html_theme_options = {}
-
-# Add any paths that contain custom themes here, relative to this directory.
-# html_theme_path = []
-
-# The name for this set of Sphinx documents.  If None, it defaults to
-# "<project> v<release> documentation".
-# html_title = None
-
-# A shorter title for the navigation bar.  Default is the same as html_title.
-# html_short_title = None
-
-# The name of an image file (relative to this directory) to place at the top
-# of the sidebar.
-html_logo = "_images/thespacedoctor_icon_white_circle.png"
-
-# The name of an image file (within the static path) to use as favicon of the
-# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
-# pixels large.
-html_favicon = "_images/favicon.ico"
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-
-# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
-# using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
-
-
-# Custom sidebar templates, maps document names to template names.
-# html_sidebars = {}
-
-# Additional templates that should be rendered to pages, maps page names to
-# template names.
-# html_additional_pages = {}
-
-# If false, no module index is generated.
-# html_domain_indices = True
-
-# If false, no index is generated.
-# html_use_index = True
-
-# If true, the index is split into individual pages for each letter.
-# html_split_index = False
-
-# If true, links to the reST sources are added to the pages.
-html_show_sourcelink = True
-
-# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
-# html_show_sphinx = True
-
-# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-# html_show_copyright = True
-
-html_add_permalinks = u"  ∞"
-
-# If true, an OpenSearch description file will be output, and all pages will
-# contain a <link> tag referring to it.  The value of this option must be the
-# base URL from which the finished HTML is served.
-# html_use_opensearch = ''
-
-# This is the file name suffix for HTML files (e.g. ".xhtml").
-# html_file_suffix = None
-
-# Output file base name for HTML help builder.
-html_help_basename = 'xxxpython_package_namexxxdoc'
-
-
-# -- Options for LaTeX output --------------------------------------------
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #'preamble': '',
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
     ('index', 'xxxpython_package_namexxx.tex', u'xxxpython_package_namexxx Documentation',
      u'Dave Young', 'manual'),
 ]
-
-# The name of an image file (relative to this directory) to place at the top of
-# the title page.
 latex_logo = "_images/thespacedoctor_icon_dark.png"
 
-# For "manual" documents, if this is true, then toplevel headings are parts,
-# not chapters.
-# latex_use_parts = False
-
-# If true, show page references after internal links.
-# latex_show_pagerefs = False
-
-# If true, show URL addresses after external links.
-# latex_show_urls = False
-
-# Documents to append as an appendix to all manuals.
-# latex_appendices = []
-
-# If false, no module index is generated.
-# latex_domain_indices = True
-
-
-# -- Options for manual page output --------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'xxxpython_package_namexxx', u'xxxpython_package_namexxx Documentation',
-     [u'Dave Young'], 1)
-]
-
-# If true, show URL addresses after external links.
-# man_show_urls = False
-
-
-# -- Options for Texinfo output ------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    ('index', 'xxxpython_package_namexxx', u'xxxpython_package_namexxx Documentation',
-     u'Dave Young', 'xxxpython_package_namexxx', 'xxxpackage_descriptionxxx',
-     'Miscellaneous'),
-]
-
-# Documents to append as an appendix to all manuals.
-# texinfo_appendices = []
-
-# If false, no module index is generated.
-# texinfo_domain_indices = True
-
-# How to display URL addresses: 'footnote', 'no', or 'inline'.
-# texinfo_show_urls = 'footnote'
-
-
-trim_footnote_reference_space = True
+markdown_parser_config = {
+    'auto_toc_tree_section': 'Content',
+    'enable_auto_toc_tree': True,
+    'enable_eval_rst': True,
+    'enable_inline_math': True,
+    'enable_math': True,
+    'extensions': [
+        'extra',
+        'nl2br',
+        'sane_lists',
+        'smarty',
+        'toc',
+        'wikilinks',
+        'pymdownx.arithmatex',
+        'meta',
+        'pymdownx.tilde',
+        'pymdownx.critic',
+        'pymdownx.tasklist',
+        'mdx_include',
+        'pymdownx.mark',
+        'pymdownx.betterem',
+        'pymdownx.caret'
+    ],
+    'extension_configs': {
+        'toc': {
+            'marker': '1234TOC1234',
+            'toc_depth': '2-5'
+        },
+        'pymdownx.tasklist': {
+            'custom_checkbox': False,
+            'clickable_checkbox': False
+        },
+        'mdx_include': {
+            "base_path": moduleDirectory,
+            "syntax_left": "\{\{",
+            "syntax_right": "\}\}",
+        }
+    },
+}
 
 
 def updateUsageRST():
-
+    """
+    *Grab the usage from cl_utils.py to display in README.md*
+    """
     from xxxpython_package_namexxx import cl_utils
     usage = cl_utils.__doc__
 
@@ -260,9 +154,6 @@ def updateUsageRST():
         writeFile.close()
 
     return None
-
-
-updateUsageRST()
 
 
 def generateAutosummaryIndex():
@@ -309,8 +200,10 @@ def generateAutosummaryIndex():
                 if name in ["numpy"]:
                     continue
                 thisMod = sp + "." + name
-                if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and name != "cl_utils" and name != "utKit":
+                if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests":
                     allModules.append(sp + "." + name)
+                # if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and name != "cl_utils" and name != "utKit":
+                #     allModules.append(sp + "." + name)
 
     for spm in allSubpackages + allModules:
         for name, obj in inspect.getmembers(__import__(spm, fromlist=[''])):
@@ -389,14 +282,12 @@ Functions
 
 """ % locals()
 
-    import codecs
     moduleDirectory = os.path.dirname(__file__)
     writeFile = codecs.open(
         moduleDirectory + "/autosummary.rst", encoding='utf-8', mode='w')
     writeFile.write(thisText)
     writeFile.close()
 
-    import re
     regex = re.compile(r'\n\s*.*?utKit\.utKit(\n|$)', re.I)
     allClasses = regex.sub("\n", allClasses)
 
@@ -441,37 +332,77 @@ def findAllSubpackges(
     return subPackages
 
 
-autosummaryText = generateAutosummaryIndex()
-
-# Add substitutions here
-rst_epilog = u"""
-.. |tsd| replace:: thespacedoctor
-""" % locals()
-
-
-# app setup hook
-
-github_doc_root = 'https://github.com/thespacedoctor/python-package-template/tree/master/docs/'
+def linkcode_resolve(domain, info):
+    if domain != 'py':
+        return None
+    if not info['module']:
+        return None
+    filename = info['module'].replace('.', '/')
+    return link_resolver_url + "/" + filename + ".py"
 
 
-from sphinx_markdown_parser.parser import MarkdownParser
+def docstring(app, what, name, obj, options, lines):
+
+    md = '\n'.join(lines)
+
+    regex = re.compile(r'(.+?)\n:\s+(.*\n)')
+    md = regex.sub(r'\1\n  \2', md)
+
+    regex = re.compile(r'(\s|\n)(\$[^\$\n]+\$)([^\$])')
+    md = regex.sub(r'\1`\2`\3', md)
+
+    # FIX DEFINITIONS
+    regex = re.compile(r'(( |\t)+)- ``([^\n]+)`` -')
+    md = regex.sub(r"6473829123- `\3` -", md)
+
+    # REMOVE STRIKETHROUGH
+    regex = re.compile(r'~~([^~\n]+)~~ ?')
+    md = regex.sub(r"", md)
+
+    # ALLOW FOR CITATIONS TO SEMI-WORK (AS FOOTNOTES)
+    regex = re.compile(r'\[#(.*?)\]')
+    md = regex.sub(r"[^cite\1]", md)
+
+    # SUBSCRIPT
+    regex = re.compile(r'([!~]*\S)~(\S)([!~]*\n)')
+    md = regex.sub(r"\1~\2~\3", md)
+    regex = re.compile(r'([^\~])\~([^\~\n]+)\~([^\~])')
+    index = 0
+    while index < 100 and "~" in md:
+        index += 1
+        md = regex.sub(r'\1\\ :sub:`\2`\\\3', md, count=1)
+
+    # SUPERSCRIPT
+    regex = re.compile(r'([!\^]*\S)\^(\S)([!\^]*\n)')
+    md = regex.sub(r"\1^\2^\3", md)
+    regex = re.compile(r'([^\^])\^([^\^\n]+)\^([^\^])')
+    index = 0
+    while index < 100 and "^" in md:
+        index += 1
+        md = regex.sub(r'\1\\ :sup:`\2`\\\3', md, count=1)
+
+    # HR
+    regex = re.compile(r'\n---')
+    md = regex.sub(r"\n\n----------\n\n", md)
+
+    rst = md
+    rst = m2r.convert(md)
+    rst = rst.replace("6473829123", "  ")
+
+    # REPLACE THE DOCSTRING LINES WITH OUR NEW RST
+    lines.clear()
+    for line in rst.split("\n"):
+        lines.append(line)
 
 
 def setup(app):
+    app.connect('autodoc-process-docstring', docstring)
     app.add_source_suffix('.md', 'markdown')
     app.add_source_parser(MarkdownParser)
-    app.add_config_value('markdown_parser_config', {
-        'auto_toc_tree_section': 'Content',
-        'enable_auto_doc_ref': True,
-        'enable_auto_toc_tree': True,
-        'enable_eval_rst': True,
-        'extensions': [
-            'extra',
-            'nl2br',
-            'sane_lists',
-            'smarty',
-            'toc',
-            'wikilinks',
-            'pymdownx.arithmatex',
-        ],
-    }, True)
+    app.add_config_value('markdown_parser_config',
+                         markdown_parser_config, True)
+    app.add_transform(AutoStructify)
+
+# DO THE WORK
+updateUsageRST()
+autosummaryText = generateAutosummaryIndex()

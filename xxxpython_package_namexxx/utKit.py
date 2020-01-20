@@ -62,7 +62,7 @@ class utKit(utKit):
 
     def get_project_root(self):
         """
-        *Get the root of the python package - useful for getting files in the root directory of a project*
+        *Get the root of the `python` package - useful for getting files in the root directory of a project*
 
         **Return:**
             - ``rootPath`` -- the root path of a project
