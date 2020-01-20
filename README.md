@@ -1,8 +1,7 @@
 # xxxpython\_package\_namexxx
 
-[![Documentation Status](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge)
+[![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge) [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/htmlcov/index.html)
 
-[![Coverage Status](https://cdn.rawgit.com/thespacedoctor/xxxpython_package_namexxx/master/coverage.svg)](https://cdn.rawgit.com/thespacedoctor/xxxpython_package_namexxx/master/htmlcov/index.html)
 
 *A python package and command-line tools for xxxpackage\_descriptionxxx*.
 

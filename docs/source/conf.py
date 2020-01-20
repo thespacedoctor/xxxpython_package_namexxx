@@ -200,7 +200,7 @@ def generateAutosummaryIndex():
                 if name in ["numpy"]:
                     continue
                 thisMod = sp + "." + name
-                if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests":
+                if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and "cl_util" not in name:
                     allModules.append(sp + "." + name)
                 # if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and name != "cl_utils" and name != "utKit":
                 #     allModules.append(sp + "." + name)
@@ -388,11 +388,15 @@ def docstring(app, what, name, obj, options, lines):
     rst = md
     rst = m2r.convert(md)
     rst = rst.replace("6473829123", "  ")
+    rst = rst.replace(".. code-block:: eval_rst", "")
 
     # REPLACE THE DOCSTRING LINES WITH OUR NEW RST
     lines.clear()
     for line in rst.split("\n"):
         lines.append(line)
+
+    if "docstring" in name:
+        print(rst)
 
 
 def setup(app):

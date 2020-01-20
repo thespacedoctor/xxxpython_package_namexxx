@@ -17,7 +17,6 @@ Modules
    :toctree: _autosummary
    :nosignatures:
 
-   xxxpython_package_namexxx.cl_utils
    xxxpython_package_namexxx.utKit 
 
 
@@ -29,14 +28,4 @@ Classes
    :nosignatures:
 
    xxxpython_package_namexxx.utKit.utKit 
-
-
-Functions
----------
-
-.. autosummary::
-   :toctree: _autosummary
-   :nosignatures:
-
-   xxxpython_package_namexxx.cl_utils.tab_complete 
 

@@ -5,7 +5,7 @@ Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_
 
 Usage:
     xxxpython_package_namexxx init
-    xxxpython_package_namexxx [-s <pathToSettingsFile>]
+    xxxpython_package_namexxx [-s <pathToSettingsFile>]  
 
 Options:
     init                                   setup the xxxpython_package_namexxx settings file for the first time
