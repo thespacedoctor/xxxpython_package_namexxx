@@ -5,3 +5,4 @@ git+https://github.com/thespacedoctor/sphinx-markdown-parser.git@master#egg=sphi
 m2r
 mdx_include
 lxml
+sphinxcontrib-mermaid

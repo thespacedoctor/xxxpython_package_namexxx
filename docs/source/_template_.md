@@ -1,7 +1,9 @@
 tags: #multimarkdown #markdown
 category: template durable dynamic
 
-# Multimarkdown Rendering Test Document
+# Syntax for Docs
+
+This is a template document giving an overview of the syntax that can be used throughout these docs.
 
 **Table of Contents**
 
@@ -9,7 +11,7 @@ category: template durable dynamic
 
 ## AutoStructify
 
-* [Link to Index File](index.md)
+* [Link to Some File](somefile.md)
 * [Link to Installation File](installation.md)
 
 ## Embed reStructuredText
@@ -130,9 +132,9 @@ C~6~H~12~O~6
 
 ## Citations
 
-Cite a source.[p. 42][#source]
+Cite a source.[p. 42][#20200121]
 
-[#source]: John Doe. *A Totally Fake Book*. Vanity Press, 2006.
+[#20200121]: John Doe. *A Totally Fake Book*. Vanity Press, 2006.
 
 Black (2015)[#Black:2015tz]
 

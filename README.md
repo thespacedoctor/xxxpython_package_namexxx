@@ -1,4 +1,4 @@
-# xxxpython\_package\_namexxx
+# xxxpython\_package\_namexxx Intro
 
 [![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge)   [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/htmlcov/index.html)
 
@@ -29,6 +29,8 @@ To upgrade to the latest version of xxxpython\_package\_namexxx use the command:
 ``` bash
 pip install xxxpython_package_namexxx --upgrade
 ```
+
+## Development
 
 If you want to tinker with the code, then install in development mode. This means you can modify the code from your cloned repo:
 

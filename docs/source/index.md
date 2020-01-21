@@ -9,49 +9,44 @@
 
 {{../../README.md}}
 
-## Command-Line
-
-* [Usage](usage.md)
-* [Todo List](todolist.md)
-
-## API Index
+## Getting Started
 
 ```eval_rst
-.. _Indexes:
-
-* :ref:`Module Index<modindex>`
-* :ref:`Full Index<genindex>`
-
 .. toctree::
    :maxdepth: 4
 
-   Todo List <todolist>
-   todolist
-   Todo List <todolist>
-
-
-.. toctree::
-   :maxdepth: 30
-   :caption: Python Package Documentation
-
-   autosummary
-
-.. _Indexes:
-
-Indexes
--------
-
-* :ref:`Module Index<modindex>`
-* :ref:`Full Index<genindex>`
-
-
-Todo
-----
-
-* `Todolist <todolist.html>`_
-
-
-
-
+   quickstart
 ```
 
+```eval_rst
+.. toctree::
+   :maxdepth: 4
+   :caption: Add Content Here
+
+   _template_
+```
+
+## API
+
+```eval_rst
+.. toctree::
+   :hidden:
+   :maxdepth: 30
+   :caption: API
+
+   autosummary
+```
+
+
+```eval_rst
+.. include:: /autosummary_include.rst
+```
+
+
+```eval_rst
+.. toctree::
+   :maxdepth: 30
+   :caption: Misc
+
+   todolist
+```

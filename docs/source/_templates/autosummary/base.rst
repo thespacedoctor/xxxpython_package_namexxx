@@ -1,4 +1,4 @@
-{{ fullname }} (*function*)
+{{ objname }} (*function*)
 {{ underline }}=============
 
 .. currentmodule:: {{ module }}

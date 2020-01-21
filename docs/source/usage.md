@@ -1,7 +1,5 @@
 
 
-# Command-Line Usage
-
 ```bash 
     
     Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_package_namexxx.readthedocs.org/en/stable

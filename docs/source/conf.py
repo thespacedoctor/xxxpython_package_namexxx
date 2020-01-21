@@ -13,7 +13,7 @@ import m2r
 import codecs
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo',
-              'sphinx.ext.mathjax', 'sphinx.ext.autosummary', 'sphinx.ext.coverage', 'sphinx.ext.linkcode']
+              'sphinx.ext.mathjax', 'sphinx.ext.autosummary', 'sphinx.ext.coverage', 'sphinx.ext.linkcode', 'sphinxcontrib.mermaid']
 
 
 class Mock(MagicMock):
@@ -34,11 +34,12 @@ exec(open(moduleDirectory + "/../../xxxpython_package_namexxx/__version__.py").r
 
 autosummary_generate = True
 autodoc_member_order = 'bysource'
+add_module_names = False
 todo_include_todos = True
-templates_path = ['_templates']
+templates_path = ['_templates', '_static/whistles-theme/sphinx']
 source_suffix = ['.rst', '.md']
 master_doc = 'index'
-pygments_style = 'monokai'
+# pygments_style = 'monokai'
 html_theme = 'sphinx_rtd_theme'
 html_logo = "_images/thespacedoctor_icon_white_circle.png"
 html_favicon = "_images/favicon.ico"
@@ -138,8 +139,6 @@ def updateUsageMd():
         usageString += "    " + l + "\n"
 
     usage = """
-
-# Command-Line Usage
 
 ```bash 
 %(usageString)s
@@ -279,6 +278,9 @@ Functions
 
    %(allFunctions)s 
 
+:ref:`Index<genindex>`
+----------------------
+
 """ % locals()
 
     moduleDirectory = os.path.dirname(__file__)
@@ -290,7 +292,22 @@ Functions
     regex = re.compile(r'\n\s*.*?utKit\.utKit(\n|$)', re.I)
     allClasses = regex.sub("\n", allClasses)
 
-    classAndFunctions = u"""
+    autosummaryInclude = u"""
+**Subpackages**
+
+.. autosummary::
+   :nosignatures:
+   :template: autosummary/subpackage.rst
+
+   %(allSubpackages)s
+
+**Modules**
+
+.. autosummary::
+   :nosignatures:
+
+   %(allModules)s
+
 **Classes**
 
 .. autosummary::
@@ -304,12 +321,14 @@ Functions
    :nosignatures:
 
    %(allFunctions)s 
+
+:ref:`Index<genindex>`
 """ % locals()
 
     moduleDirectory = os.path.dirname(__file__)
     writeFile = codecs.open(
-        moduleDirectory + "/classes_and_functions.rst", encoding='utf-8', mode='w')
-    writeFile.write(classAndFunctions)
+        moduleDirectory + "/autosummary_include.rst", encoding='utf-8', mode='w')
+    writeFile.write(autosummaryInclude)
     writeFile.close()
 
     return thisText
@@ -360,7 +379,7 @@ def docstring(app, what, name, obj, options, lines):
 
     # ALLOW FOR CITATIONS TO SEMI-WORK (AS FOOTNOTES)
     regex = re.compile(r'\[#(.*?)\]')
-    md = regex.sub(r"[^cite\1]", md)
+    md = regex.sub(r"[^cn\1]", md)
 
     # SUBSCRIPT
     regex = re.compile(r'([!~]*\S)~(\S)([!~]*\n)')

@@ -1,4 +1,4 @@
-{{ fullname }} (*subpackage*)
+{{ name }} (*subpackage*)
 {{ underline }}===============
 
 .. automodule:: {{ fullname }}

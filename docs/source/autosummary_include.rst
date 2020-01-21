@@ -1,45 +1,32 @@
 
-Subpackages
------------
+**Subpackages**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
    :template: autosummary/subpackage.rst
 
-   xxxpython_package_namexxx.commonutils 
+   xxxpython_package_namexxx.commonutils
 
-
-Modules
--------
+**Modules**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    xxxpython_package_namexxx.docstring_test
-   xxxpython_package_namexxx.utKit 
+   xxxpython_package_namexxx.utKit
 
-
-Classes
--------
+**Classes**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    xxxpython_package_namexxx.utKit.utKit 
 
-
-Functions
----------
+**Functions**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    xxxpython_package_namexxx.docstring_test.docsting_test 
 
 :ref:`Index<genindex>`
-----------------------
-

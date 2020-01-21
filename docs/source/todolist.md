@@ -4,8 +4,4 @@
 .. todolist::
 ```
 
-## Rabbits
 
-## Cheese
-
-### Cucumber

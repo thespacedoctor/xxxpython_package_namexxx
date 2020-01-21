@@ -1,4 +1,4 @@
-{{ fullname }} (*module*)
+{{ objname }} (*module*)
 {{ underline }}===========
 
 
