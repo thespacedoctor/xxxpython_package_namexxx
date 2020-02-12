@@ -5,7 +5,7 @@
 Before you begin using xxxpython-package-namexxx you need to use the `init` command to generate a user settings file. Running the following:
 
 ```bash
-rockfinder init
+xxxpython-package-namexxx init
 ```
 
 creates a yaml settings file in your home foler under `~/.config/xxxpython-package-namexxx/xxxpython-package-namexxx.yaml`. This is where most of the xxxpython-package-namexxx setting can be adjusted to liking.

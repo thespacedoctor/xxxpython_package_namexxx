@@ -1,6 +1,7 @@
-# xxxpython\_package\_namexxx Intro
+# xxxpython\_package\_namexxx
 
-[![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge)   [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/htmlcov/index.html)
+[![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge)
+[![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/htmlcov/index.html)
 
 
 *A python package and command-line tools for xxxpackage\_descriptionxxx*.
