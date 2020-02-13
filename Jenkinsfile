@@ -7,7 +7,7 @@ pipeline {
     }
 
     options {
-        skipDefaultCheckout(true)
+        // skipDefaultCheckout(true)
         // KEEP THE 10 MOST RECENT BUILDS
         buildDiscarder(logRotator(numToKeepStr: '10'))
         timestamps()
