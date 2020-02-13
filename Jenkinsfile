@@ -3,7 +3,10 @@ String determineRepoName() {
     return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
 }
 def git_repo_name = determineRepoName()
-
+String determineBranchName() {
+    return scm.getUserRemoteConfigs()[0].getUrl()
+}
+def git_branch_name = determineBranchName()
 
 pipeline {
 
@@ -51,9 +54,11 @@ pipeline {
         }
     }
     post {
+        http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/detail/feature%2Fadding-jenkins-pipeline/12/pipeline
+        http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/feature%2Fadding-jenkins-pipeline/12/pipeline/
         // http://167.99.90.204:8080/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline
         always {
-            slackSend message: "${git_repo_name} ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
+            slackSend message: "${git_branch_name} ${git_repo_name} ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
         failure {
