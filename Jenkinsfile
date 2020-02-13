@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG}-p3 python=3.7 pip
                       source activate ${BUILD_TAG}-p3 
-                      pip install -r requirements.txt
+                      python setup.py install
                     '''
             }
         }
