@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     // CHECK GITHUB EVERY 5 MINS MONDAY-FRIDAY
-    triggers {
-        pollSCM('*/5 * * * 1-5')
-    }
+    // triggers {
+    //     pollSCM('*/5 * * * 1-5')
+    // }
 
     options {
         // skipDefaultCheckout(true)
@@ -44,6 +44,7 @@ pipeline {
     }
     post {
         always {
+            slackSend "Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
         failure {
