@@ -1,4 +1,10 @@
 // JENKINS ENV VARS: https://jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
+String determineRepoName() {
+    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
+}
+def git_repo_name = determineRepoName()
+
+
 pipeline {
 
     agent any
@@ -57,7 +63,4 @@ pipeline {
 }
 
 
-String determineRepoName() {
-    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-}
-def git_repo_name = determineRepoName()
+
