@@ -41,12 +41,13 @@ pipeline {
                     '''
             }
         }
-        post {
-            always {
-                sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
-            }
-            failure {
-                echo "Send e-mail, when failed"
-            }
+    }
+    post {
+        always {
+            sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
+        failure {
+            echo "Send e-mail, when failed"
+        }
+    }
 }
