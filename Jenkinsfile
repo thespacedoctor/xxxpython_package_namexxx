@@ -44,7 +44,7 @@ pipeline {
     }
     post {
         always {
-            slackSend "Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+            slackSend message: "Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
         failure {
