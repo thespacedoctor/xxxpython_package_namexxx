@@ -1,3 +1,5 @@
+// JENKINS ENV VARS: https://jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
+
 pipeline {
     agent any
 
@@ -43,8 +45,9 @@ pipeline {
         }
     }
     post {
+        // http://167.99.90.204:8080/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline
         always {
-            slackSend message: "Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+            slackSend message: "${env.JENKINS_URL} ${env.JOB_NAME} ${env.WORKSPACE} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
         failure {
