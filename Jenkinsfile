@@ -3,12 +3,10 @@
 
 @Library('thespacedoctor')_
 
-def nice = "nice"
-
 String determineBranchName() {
     return scm.getUserRemoteConfigs()[0].getUrl()
 }
-def git_branch_name = determineBranchName()
+def repoName = setVars.repoName()
 
 pipeline {
 
@@ -28,14 +26,11 @@ pipeline {
     // SOURCE ANACONDA
     environment {
       PATH="/var/lib/jenkins/anaconda/bin:$PATH"
-      REPO_NAME=setVars.repoName()
     }
 
     stages {
         stage ("Code pull"){
             steps{
-                sayHello 'Joe'
-                setVars.repoName()
                 checkout scm
             }
         }
@@ -64,8 +59,6 @@ pipeline {
         // http://167.99.90.204:8080/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline
         // URL ENCODE BRANCH PLEASE: ${env.JENKINS_URL}/blue/organizations/jenkins/${git_repo_name}/${git_branch_name}/${env.BUILD_NUMBER}/pipeline
         always {
-            // log.info("I can see you")
-            sh 'echo ${nice}'
             slackSend message: "${env.BRANCH_NAME}\n ${env.REPO_NAME}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
