@@ -41,13 +41,6 @@ pipeline {
             }
         }
 
-        stage ("Code pull"){
-            steps{
-                sayHello 'Joe'
-                checkout scm
-            }
-        }
-
         stage('Build conda python 3.7 environment') {
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG}-p3 python=3.7 pip
