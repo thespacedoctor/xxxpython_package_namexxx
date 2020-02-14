@@ -3,7 +3,7 @@
 
 @Library('thespacedoctor@master') _
 
-
+def nice = "nice"
 String determineRepoName() {
     return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
 }
@@ -65,6 +65,7 @@ pipeline {
         // URL ENCODE BRANCH PLEASE: ${env.JENKINS_URL}/blue/organizations/jenkins/${git_repo_name}/${git_branch_name}/${env.BUILD_NUMBER}/pipeline
         always {
             script{log.info("I can see you")}
+            echo ${git_branch_name}
             slackSend message: "${env.BRANCH_NAME}\n ${git_branch_name}\n ${git_repo_name}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
