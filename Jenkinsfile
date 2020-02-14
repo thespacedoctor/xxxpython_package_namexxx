@@ -28,7 +28,7 @@ pipeline {
     // SOURCE ANACONDA
     environment {
       PATH="/var/lib/jenkins/anaconda/bin:$PATH"
-      // REPO_NAME=setVars.determineRepoName()
+      REPO_NAME=setVars.determineRepoName()
     }
 
     stages {
