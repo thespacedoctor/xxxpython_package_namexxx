@@ -34,6 +34,7 @@ pipeline {
     stages {
         stage ("Code pull"){
             steps{
+                setVars.repoName()
                 checkout scm
             }
         }
