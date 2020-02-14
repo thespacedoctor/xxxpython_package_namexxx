@@ -4,6 +4,7 @@
 @Library('thespacedoctor@master') _
 
 def log = new log()
+log.info("I can see you")
 
 String determineRepoName() {
     return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
