@@ -1,7 +1,7 @@
 // JENKINS ENV VARS: https://jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
 // SLACK PLUGIN DOCS: https://jenkins.io/doc/pipeline/steps/slack/#slacksend-send-slack-message
 
-@Library('thespacedoctor@master') _
+@Library('thespacedoctor')_
 
 def nice = "nice"
 String determineRepoName() {
@@ -40,6 +40,12 @@ pipeline {
             }
         }
 
+        stage ("Code pull"){
+            steps{
+                checkout scm
+            }
+        }
+
         stage('Build conda python 3.7 environment') {
             steps {
                 sh '''conda create --yes -n ${BUILD_TAG}-p3 python=3.7 pip
@@ -65,7 +71,7 @@ pipeline {
         // URL ENCODE BRANCH PLEASE: ${env.JENKINS_URL}/blue/organizations/jenkins/${git_repo_name}/${git_branch_name}/${env.BUILD_NUMBER}/pipeline
         always {
             script{log.info("I can see you")}
-            echo "${nice}"
+            sh 'echo ${nice}'
             slackSend message: "${env.BRANCH_NAME}\n ${git_branch_name}\n ${git_repo_name}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
