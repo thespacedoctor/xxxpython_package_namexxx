@@ -4,10 +4,7 @@
 @Library('thespacedoctor')_
 
 def nice = "nice"
-String determineRepoName() {
-    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-}
-def git_repo_name = determineRepoName()
+
 String determineBranchName() {
     return scm.getUserRemoteConfigs()[0].getUrl()
 }
@@ -31,6 +28,7 @@ pipeline {
     // SOURCE ANACONDA
     environment {
       PATH="/var/lib/jenkins/anaconda/bin:$PATH"
+      repoName = setVars.determineRepoName()
     }
 
     stages {
