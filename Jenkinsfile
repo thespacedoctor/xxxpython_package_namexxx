@@ -1,6 +1,8 @@
 // JENKINS ENV VARS: https://jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
 // SLACK PLUGIN DOCS: https://jenkins.io/doc/pipeline/steps/slack/#slacksend-send-slack-message
 
+@Library('thespacedoctor@master') _
+
 String determineRepoName() {
     return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
 }
@@ -9,6 +11,16 @@ String determineBranchName() {
     return scm.getUserRemoteConfigs()[0].getUrl()
 }
 def git_branch_name = determineBranchName()
+
+String urlEncode() {
+    import java.net.URLEncoder;
+    return scm.getUserRemoteConfigs()[0].getUrl()
+}
+
+// ADD A URL ENCODE METHOD TO STRING 
+String.metaClass.encodeURL = {
+   java.net.URLEncoder.encode(delegate, "UTF-8")
+}
 
 pipeline {
 
@@ -56,10 +68,12 @@ pipeline {
         }
     }
     post {
-        http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/detail/feature%2Fadding-jenkins-pipeline/12/pipeline
-        http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/feature%2Fadding-jenkins-pipeline/12/pipeline/
+        // http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/detail/feature%2Fadding-jenkins-pipeline/12/pipeline
+        // http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/feature%2Fadding-jenkins-pipeline/12/pipeline/
         // http://167.99.90.204:8080/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline
+        // URL ENCODE BRANCH PLEASE: ${env.JENKINS_URL}/blue/organizations/jenkins/${git_repo_name}/${git_branch_name}/${env.BUILD_NUMBER}/pipeline
         always {
+            log.info "I can see you"
             slackSend message: "${env.BRANCH_NAME}\n ${git_branch_name}\n ${git_repo_name}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
