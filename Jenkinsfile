@@ -6,7 +6,6 @@
 String determineBranchName() {
     return scm.getUserRemoteConfigs()[0].getUrl()
 }
-def repoName = setVars.repoName()
 
 pipeline {
 
