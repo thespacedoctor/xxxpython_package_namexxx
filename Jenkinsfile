@@ -12,16 +12,6 @@ String determineBranchName() {
 }
 def git_branch_name = determineBranchName()
 
-String urlEncode() {
-    import java.net.URLEncoder;
-    return scm.getUserRemoteConfigs()[0].getUrl()
-}
-
-// ADD A URL ENCODE METHOD TO STRING 
-String.metaClass.encodeURL = {
-   java.net.URLEncoder.encode(delegate, "UTF-8")
-}
-
 pipeline {
 
     agent any
