@@ -3,19 +3,17 @@
 
 @Library('thespacedoctor')_
 
-def nice = "nice"
-String determineRepoName() {
-    return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-}
-def git_repo_name = determineRepoName()
-String determineBranchName() {
-    return scm.getUserRemoteConfigs()[0].getUrl()
-}
-def git_branch_name = determineBranchName()
+// def nice = "nice"
+// String determineRepoName() {
+//     return scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
+// }
+// def git_repo_name = determineRepoName()
+// String determineBranchName() {
+//     return scm.getUserRemoteConfigs()[0].getUrl()
+// }
+// def git_branch_name = determineBranchName()
 
 pipeline {
-
-    log.info("I can see you")
 
     agent any
 
@@ -38,12 +36,14 @@ pipeline {
     stages {
         stage ("Code pull"){
             steps{
+                sayHello 'Joe'
                 checkout scm
             }
         }
 
         stage ("Code pull"){
             steps{
+                sayHello 'Joe'
                 checkout scm
             }
         }
@@ -73,7 +73,7 @@ pipeline {
         // URL ENCODE BRANCH PLEASE: ${env.JENKINS_URL}/blue/organizations/jenkins/${git_repo_name}/${git_branch_name}/${env.BUILD_NUMBER}/pipeline
         always {
             log.info("I can see you")
-            sh 'echo ${nice}'
+            // sh 'echo ${nice}'
             slackSend message: "${env.BRANCH_NAME}\n ${git_branch_name}\n ${git_repo_name}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
