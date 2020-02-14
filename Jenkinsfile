@@ -28,16 +28,10 @@ pipeline {
     // SOURCE ANACONDA
     environment {
       PATH="/var/lib/jenkins/anaconda/bin:$PATH"
-      repoName = setVars.determineRepoName()
+      REPO_NAME=setVars.determineRepoName()
     }
 
     stages {
-        stage ("Code pull"){
-            steps{
-                checkout scm
-            }
-        }
-
         stage ("Code pull"){
             steps{
                 checkout scm
@@ -70,7 +64,7 @@ pipeline {
         always {
             // log.info("I can see you")
             sh 'echo ${nice}'
-            slackSend message: "${env.BRANCH_NAME}\n ${git_branch_name}\n ${git_repo_name}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
+            slackSend message: "${env.BRANCH_NAME}\n ${env.REPO_NAME}\n ${env.NODE_NAME} Build Finished - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.JENKINS_URL}/blue/organizations/jenkins/${env.JOB_NAME}/${env.BUILD_NUMBER}/pipeline|Open>)"
             sh 'conda remove --yes -n ${BUILD_TAG}-p3 --all'
         }
         failure {
