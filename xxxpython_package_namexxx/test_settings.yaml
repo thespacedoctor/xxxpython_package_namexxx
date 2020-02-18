@@ -37,7 +37,7 @@ logging settings:
             class: logging.handlers.GroupWriteRotatingFileHandler
             level: WARNING
             formatter: file_style
-            filename: /Users/Dave/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.log
+            filename: ~/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.log
             mode: w+
             maxBytes: 102400
             backupCount: 1
