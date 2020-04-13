@@ -4,7 +4,6 @@ from builtins import str
 import sys
 import os
 from datetime import datetime, date, time
-from xxxpython_package_namexxx import cl_utils
 from mock import Mock as MagicMock
 import re
 from sphinx_markdown_parser.parser import MarkdownParser, CommonMarkParser
@@ -22,7 +21,7 @@ class Mock(MagicMock):
     def __getattr__(cls, name):
         return Mock()
 MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.colors',
-                'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest']
+                'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest', 'pandas']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 
@@ -36,7 +35,7 @@ autosummary_generate = True
 autodoc_member_order = 'bysource'
 add_module_names = False
 todo_include_todos = True
-templates_path = ['_templates', '_static/whistles-theme/sphinx']
+templates_path = ['_static/whistles-theme/sphinx']
 source_suffix = ['.rst', '.md']
 master_doc = 'index'
 # pygments_style = 'monokai'
