@@ -1,4 +1,4 @@
-utKit (*class*)
+utKit
 ===============================================
 
 .. currentmodule:: xxxpython_package_namexxx.utKit

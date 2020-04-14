@@ -1,4 +1,4 @@
-docsting_test (*function*)
+docsting_test
 ===================================================================
 
 .. currentmodule:: xxxpython_package_namexxx.docstring_test

@@ -1,4 +1,4 @@
-commonutils (*subpackage*)
+commonutils
 ====================================================
 
 .. automodule:: xxxpython_package_namexxx.commonutils
