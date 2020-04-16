@@ -1,15 +1,4 @@
 
-Subpackages
------------
-
-.. autosummary::
-   :toctree: _autosummary
-   :nosignatures:
-   :template: autosummary/subpackage.rst
-
-   xxxpython_package_namexxx.commonutils 
-
-
 Modules
 -------
 
@@ -17,6 +6,7 @@ Modules
    :toctree: _autosummary
    :nosignatures:
 
+   xxxpython_package_namexxx.commonutils 
    xxxpython_package_namexxx.docstring_test
    xxxpython_package_namexxx.utKit 
 
@@ -39,7 +29,3 @@ Functions
    :nosignatures:
 
    xxxpython_package_namexxx.docstring_test.docsting_test 
-
-:ref:`Index<genindex>`
-----------------------
-
