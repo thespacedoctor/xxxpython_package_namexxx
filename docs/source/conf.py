@@ -35,7 +35,7 @@ autosummary_generate = True
 autodoc_member_order = 'bysource'
 add_module_names = False
 todo_include_todos = True
-templates_path = ['_templates', '_static/whistles-theme/sphinx']
+templates_path = ['_static/whistles-theme/sphinx']
 source_suffix = ['.rst', '.md']
 master_doc = 'index'
 # pygments_style = 'monokai'
@@ -43,8 +43,21 @@ html_theme = 'sphinx_rtd_theme'
 html_logo = "_images/thespacedoctor_icon_white_circle.png"
 html_favicon = "_images/favicon.ico"
 html_show_sourcelink = True
-# html_theme_options = {}
-# html_theme_path = []
+html_theme_options = {
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'vcs_pageview_mode': '',
+    'style_nav_header_background': 'white',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
+}
+html_theme_path = ['_static/whistles-theme/sphinx/_themes']
 # html_title = None
 # html_short_title = None
 # html_sidebars = {}
@@ -225,23 +238,8 @@ def generateAutosummaryIndex():
 
     # FOR SUBPACKAGES USE THE SUBPACKAGE TEMPLATE INSTEAD OF DEFAULT MODULE
     # TEMPLATE
-    thisText = u""
-    if len(allSubpackages):
-        thisText += """
-Subpackages
------------
-
-.. autosummary::
-   :toctree: _autosummary
-   :nosignatures:
-   :template: autosummary/subpackage.rst
-
-   %(allSubpackages)s 
-
-""" % locals()
-
     if len(allModules):
-        thisText += """
+        thisText  = """
 Modules
 -------
 
@@ -249,6 +247,7 @@ Modules
    :toctree: _autosummary
    :nosignatures:
 
+   %(allSubpackages)s 
    %(allModules)s 
 
 """ % locals()
@@ -276,10 +275,6 @@ Functions
    :nosignatures:
 
    %(allFunctions)s 
-
-:ref:`Index<genindex>`
-----------------------
-
 """ % locals()
 
     moduleDirectory = os.path.dirname(__file__)
@@ -292,19 +287,12 @@ Functions
     allClasses = regex.sub("\n", allClasses)
 
     autosummaryInclude = u"""
-**Subpackages**
-
-.. autosummary::
-   :nosignatures:
-   :template: autosummary/subpackage.rst
-
-   %(allSubpackages)s
-
 **Modules**
 
 .. autosummary::
    :nosignatures:
 
+   %(allSubpackages)s 
    %(allModules)s
 
 **Classes**
@@ -320,8 +308,6 @@ Functions
    :nosignatures:
 
    %(allFunctions)s 
-
-:ref:`Index<genindex>`
 """ % locals()
 
     moduleDirectory = os.path.dirname(__file__)
