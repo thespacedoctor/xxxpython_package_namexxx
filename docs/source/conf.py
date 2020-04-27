@@ -39,7 +39,7 @@ templates_path = ['_static/whistles-theme/sphinx']
 source_suffix = ['.rst', '.md']
 master_doc = 'index'
 # pygments_style = 'monokai'
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_dryx_rtd_theme'
 html_logo = "_images/thespacedoctor_icon_white_circle.png"
 html_favicon = "_images/favicon.ico"
 html_show_sourcelink = True
@@ -55,7 +55,10 @@ html_theme_options = {
     'sticky_navigation': True,
     'navigation_depth': 4,
     'includehidden': True,
-    'titles_only': False
+    'titles_only': False,
+    'github_user': 'thespacedoctor',
+    'github_repo': 'xxxpython_package_namexxx',
+    'strap_line': "xxxpackage\_descriptionxxx"
 }
 html_theme_path = ['_static/whistles-theme/sphinx/_themes']
 # html_title = None
@@ -73,7 +76,7 @@ trim_footnote_reference_space = True
 rst_epilog = u"""
 .. |tsd| replace:: thespacedoctor
 """ % locals()
-link_resolver_url = "https://github.com/thespacedoctor/python-package-template/tree/master"
+link_resolver_url = "https://github.com/thespacedoctor/xxxpython_package_namexxx/tree/master"
 
 
 # General information about the project.
@@ -204,13 +207,14 @@ def generateAutosummaryIndex():
     allModules = []
     allClasses = []
     allFunctions = []
+    allMethods = []
     for sp in allSubpackages:
         for name, obj in inspect.getmembers(__import__(sp, fromlist=[''])):
             if inspect.ismodule(obj):
                 if name in ["numpy"]:
                     continue
                 thisMod = sp + "." + name
-                if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and "cl_util" not in name:
+                if thisMod not in allSubpackages and len(name) and name[0:1] != "_" and name[-5:] != "tests" and "cl_util" not in name:
                     allModules.append(sp + "." + name)
                 # if thisMod not in allSubpackages and len(name) and name[0:2] != "__" and name[-5:] != "tests" and name != "cl_utils" and name != "utKit":
                 #     allModules.append(sp + "." + name)
@@ -219,12 +223,16 @@ def generateAutosummaryIndex():
         for name, obj in inspect.getmembers(__import__(spm, fromlist=[''])):
             if inspect.isclass(obj):
                 thisClass = spm + "." + name
-                if (thisClass == obj.__module__ or spm == obj.__module__) and len(name) and name[0:2] != "__":
+                if (thisClass == obj.__module__ or spm == obj.__module__) and len(name) and name[0:1] != "_":
                     allClasses.append(thisClass)
             if inspect.isfunction(obj):
                 thisFunction = spm + "." + name
-                if (spm == obj.__module__ or obj.__module__ == thisFunction) and len(name) and name != "main" and name[0:2] != "__":
+                if (spm == obj.__module__ or obj.__module__ == thisFunction) and len(name) and name != "main" and name[0:1] != "_":
                     allFunctions.append(thisFunction)
+            if inspect.ismethod(obj):
+                thisMethod = spm + "." + name
+                if (spm == obj.__module__ or obj.__module__ == thisMethod) and len(name) and name != "main" and name[0:1] != "_":
+                    allMethods.append(thisMethod)
 
     allSubpackages = allSubpackages[1:]
     allSubpackages.sort(reverse=False)
@@ -341,7 +349,9 @@ def linkcode_resolve(domain, info):
     if not info['module']:
         return None
     filename = info['module'].replace('.', '/')
-    return link_resolver_url + "/" + filename + ".py"
+    if info['fullname']:
+        filename += "/" + info['fullname'] + ".py"
+    return link_resolver_url + "/" + filename
 
 
 def docstring(app, what, name, obj, options, lines):

@@ -6,7 +6,7 @@
 [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/htmlcov/index.html)
 
 
-*A python package and command-line tools for xxxpackage\_descriptionxxx*.
+*xxxpackage\_descriptionxxx*.
 
 Documentation for xxxpython\_package\_namexxx is hosted by [Read the Docs](http://xxxpython_package_namexxx.readthedocs.org/en/stable/) (last
 [stable version](http://xxxpython_package_namexxx.readthedocs.org/en/stable/) and [latest version](http://xxxpython_package_namexxx.readthedocs.org/en/latest/)). The code lives on [github](https://github.com/thespacedoctor/xxxpython_package_namexxx). Please report any issues you find [here](https://github.com/thespacedoctor/xxxpython_package_namexxx/issues).

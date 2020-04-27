@@ -22,6 +22,8 @@ To upgrade to the latest version of xxxpython_package_namexxx use the command:
 pip install xxxpython_package_namexxx --upgrade
 ```
 
+To check installation was successful run `xxxpython_package_namexxx -v`. This should return the version number of the install.
+
 ## Development
 
 If you want to tinker with the code, then install in development mode. This means you can modify the code from your cloned repo:
