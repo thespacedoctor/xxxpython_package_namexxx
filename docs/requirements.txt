@@ -8,3 +8,4 @@ lxml
 sphinxcontrib-mermaid
 git+https://github.com/readthedocs/readthedocs-sphinx-search@master
 docopt
+psutil
