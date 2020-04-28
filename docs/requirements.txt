@@ -6,3 +6,5 @@ m2r
 mdx_include
 lxml
 sphinxcontrib-mermaid
+git+https://github.com/readthedocs/readthedocs-sphinx-search@master
+docopt
