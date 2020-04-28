@@ -13,7 +13,7 @@
 [![](http://167.99.90.204:8080/buildStatus/icon?job=xxxpython_package_namexxx%2Fdevelop&subject=build%20dev)](http://167.99.90.204:8080/blue/organizations/jenkins/xxxpython_package_namexxx/activity?branch=develop)  
 [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@master/coverage.svg)](https://raw.githack.com/thespacedoctor/xxxpython_package_namexxx/master/htmlcov/index.html)  
 [![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/)](http://xxxpython_package_namexxx.readthedocs.io/en/latest/?badge)  
-[![](https://img.shields.io/github/issues/thespacedoctor/xxxpython_package_namexxx/type: bug?label=bug%20issues)](https://github.com/thespacedoctor/xxxpython_package_namexxx/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22+)  
+[![](https://img.shields.io/github/issues/thespacedoctor/xxxpython_package_namexxx/type:%20bug?label=bug%20issues)](https://github.com/thespacedoctor/xxxpython_package_namexxx/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22+)  
 
 
 
