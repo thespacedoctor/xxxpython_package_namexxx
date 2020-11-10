@@ -28,13 +28,14 @@ if exists:
 
 setup(name="xxxpython_package_namexxx",
       version=__version__,
-      description="A python package and command-line tools to xxxpackage_descriptionxxx",
+      description="xxxpackage_descriptionxxx",
       long_description=readme(),
       long_description_content_type='text/markdown',
       classifiers=[
           'Development Status :: 4 - Beta',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 2.7',
           'Topic :: Utilities',
       ],
       keywords=['xxxpackage_keywords_comma_sepxxx'],

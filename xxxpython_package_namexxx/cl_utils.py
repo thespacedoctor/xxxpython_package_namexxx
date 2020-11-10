@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_package_namexxx.readthedocs.org/en/stable
+Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_package_namexxx.readthedocs.org
 
 Usage:
     xxxpython_package_namexxx init
@@ -13,7 +13,6 @@ Options:
     -v, --version                          show version
     -s, --settings <pathToSettingsFile>    the settings file
 """
-################# GLOBAL IMPORTS ####################
 import sys
 import os
 os.environ['TERM'] = 'vt100'
