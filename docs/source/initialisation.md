@@ -10,7 +10,6 @@ The file is initially populated with xxxpython_package_namexxx's default setting
 
 If at any point the user settings file becomes corrupted or you just want to start afresh, simply trash the `xxxpython_package_namexxx.yaml` file and rerun `xxxpython_package_namexxx init`.
 
-<!-- Once created, open the settings file in any text editor and follow the in-file instructions to populate the missing settings values (usually given an ``XXX`` placeholder).  -->
+<!-- xsphx-modify-settings-file -->
 
-
-
+<!-- xsphx-basic-python-setup-via-fundamentals -->
