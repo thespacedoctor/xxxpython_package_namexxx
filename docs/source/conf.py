@@ -20,6 +20,8 @@ class Mock(MagicMock):
     @classmethod
     def __getattr__(cls, name):
         return Mock()
+
+
 MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.colors',
                 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest', 'pandas']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
@@ -214,7 +216,7 @@ def generateAutosummaryIndex():
     allClasses = []
     allFunctions = []
     allMethods = []
-    for sp in allSubpackages:
+    for sp in set(allSubpackages):
         for name, obj in inspect.getmembers(__import__(sp, fromlist=[''])):
             if inspect.ismodule(obj):
                 if name in ["numpy"]:
@@ -226,7 +228,7 @@ def generateAutosummaryIndex():
                 #     allModules.append(sp + "." + name)
 
     moreModules = []
-    for spm in allSubpackages + allModules:
+    for spm in set(allSubpackages + allModules):
         for name, obj in inspect.getmembers(__import__(spm, fromlist=[''])):
             if name[:2] == "__" or allSubpackages[0] not in name:
                 continue
@@ -235,7 +237,7 @@ def generateAutosummaryIndex():
             except:
                 pass
 
-    for spm in allSubpackages + allModules + moreModules:
+    for spm in set(allSubpackages + allModules + moreModules):
         for name, obj in inspect.getmembers(__import__(spm, globals(), locals(), fromlist=[''], level=0)):
             if name[:2] == "__":
                 continue
@@ -267,7 +269,7 @@ def generateAutosummaryIndex():
     # FOR SUBPACKAGES USE THE SUBPACKAGE TEMPLATE INSTEAD OF DEFAULT MODULE
     # TEMPLATE
     if len(allModules):
-        thisText  = """
+        thisText = """
 Modules
 -------
 
@@ -448,6 +450,7 @@ def setup(app):
     app.add_config_value('markdown_parser_config',
                          markdown_parser_config, True)
     app.add_transform(AutoStructify)
+
 
 # DO THE WORK
 updateUsageMd()
