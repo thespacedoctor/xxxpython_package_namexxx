@@ -44,6 +44,9 @@ if not os.path.exists(pathToOutputDir):
 
 class test_cl_utils(unittest.TestCase):
 
+    # import pytest
+    # @pytest.mark.full
+
     def test_init(self):
         # TEST CL-OPTIONS
         command = "xxxpython_package_namexxx init"

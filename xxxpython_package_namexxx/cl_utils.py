@@ -7,21 +7,25 @@ Usage:
     xxxpython_package_namexxx init
     xxxpython_package_namexxx [-s <pathToSettingsFile>]  
 
-Options:
+Commands:
     init                                   setup the xxxpython_package_namexxx settings file for the first time
+
+Arguments:
+
+Options:    
     -h, --help                             show this help message
     -v, --version                          show version
     -s, --settings <pathToSettingsFile>    the settings file
 """
+from subprocess import Popen, PIPE, STDOUT
+from fundamentals import tools, times
+from docopt import docopt
+import pickle
+import glob
+import readline
 import sys
 import os
 os.environ['TERM'] = 'vt100'
-import readline
-import glob
-import pickle
-from docopt import docopt
-from fundamentals import tools, times
-from subprocess import Popen, PIPE, STDOUT
 
 
 def tab_complete(text, state):
