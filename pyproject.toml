@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61", "setuptools-scm"]
+requires = ["setuptools>=70", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -12,11 +12,10 @@ authors = [
 keywords = ['xxxpackage_keywords_comma_sepxxx']
 requires-python = ">=3.11"
 readme = "README.md"
-license={file = "LICENSE"}
+license = "GPL-3.0-or-later"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: GPLv3 License",
     "Operating System :: OS Independent",
     "Topic :: Utilities"
 ]
@@ -43,7 +42,6 @@ docs = [
     "sphinx-togglebutton",
     "sphinx_copybutton",
     "sphinx_tippy",
-    "furo-sphinx-search @ git+https://github.com/harshil21/furo-sphinx-search",
     "sphinx_design",
     "pygments-csv-lexer",
     "sphinxcontrib-svg2pdfconverter",
@@ -65,12 +63,13 @@ dev = [
 [project.scripts]
 xxxpython_package_namexxx = 'xxxpython_package_namexxx.cl_utils:main'
 
-[tool.setuptools]
-packages = ["xxxpython_package_namexxx"]
 
-[tool.setuptools.dynamic]
-version = {attr = "xxxpython_package_namexxx.__version__.__version__"}
+[tool.setuptools.packages.find]
+where = ["."]
 
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
 
 
 
