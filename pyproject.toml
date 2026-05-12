@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=61", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xxxpython_package_namexxx"
+dynamic = ["version"]
+description = "xxxpackage_descriptionxxx"
+authors = [
+    {name = "xxxauthorNamexxx", email= "xxxauthor@email.xxx"},
+]
+keywords = ['xxxpackage_keywords_comma_sepxxx']
+requires-python = ">=3.11"
+readme = "README.md"
+license={file = "LICENSE"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPLv3 License",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities"
+]
+dependencies = [
+    'pyyaml',
+    'fundamentals'
+]
+
+[project.urls]
+"Homepage" = "https://github.com/thespacedoctor/xxxpython_package_namexxx"
+
+[project.optional-dependencies]
+docs = [
+    "build",
+    "sphinx",
+    "sphinx-autodoc2",
+    "myst-parser",
+    "furo",
+    "sphinx-inline-tabs",
+    "sphinxext-opengraph",
+    "sphinx-autobuild",
+    "linkify-it-py",
+    "sphinxcontrib-mermaid",
+    "sphinx-togglebutton",
+    "sphinx_copybutton",
+    "sphinx_tippy",
+    "furo-sphinx-search @ git+https://github.com/harshil21/furo-sphinx-search",
+    "sphinx_design",
+    "pygments-csv-lexer",
+    "sphinxcontrib-svg2pdfconverter",
+    "sphinx-remove-toctrees",
+    "sphinxcontrib.bibtex",
+]
+tests = [
+    "pytest",
+    "pytest-cov",
+    "nose2"
+]
+dev = [
+    "xxxpython_package_namexxx[tests, docs]",
+    "build",
+    "twine"
+]
+
+# THESE ARE ENTRY POINTS USED FOR THE CL-INTERFACE
+[project.scripts]
+xxxpython_package_namexxx = 'xxxpython_package_namexxx.cl_utils:main'
+
+[tool.setuptools]
+packages = ["xxxpython_package_namexxx"]
+
+[tool.setuptools.dynamic]
+version = {attr = "xxxpython_package_namexxx.__version__.__version__"}
+
+
+
+
