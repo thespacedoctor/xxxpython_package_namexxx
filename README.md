@@ -14,7 +14,7 @@
 [![](https://soxs-eso-data.org/ci/buildStatus/icon?job=xxxpython_package_namexxx%2Fdevelop&subject=build%20dev)](https://soxs-eso-data.org/ci/blue/organizations/jenkins/xxxpython_package_namexxx/activity?branch=develop)
 [![](https://cdn.jsdelivr.net/gh/thespacedoctor/xxxpython_package_namexxx@main/coverage.svg)](https://raw.githack.com/thespacedoctor/xxxpython_package_namexxx/main/htmlcov/index.html)
 [![](https://readthedocs.org/projects/xxxpython_package_namexxx/badge/?version=main)](https://xxxpython_package_namexxx.readthedocs.io/en/main/)
-[![](https://img.shields.io/github/issues/thespacedoctor/xxxpython_package_namexxx/type:%20bug?label=bug%20issues)](https://github.com/thespacedoctor/xxxpython_package_namexxx/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22+) 
+[![](https://img.shields.io/github/issues/thespacedoctor/xxxpython_package_namexxx/type:%20bug?label=bug%20issues)](https://github.com/thespacedoctor/xxxpython_package_namexxx/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22+)
 
 *xxxpackage\_descriptionxxx*.
 
