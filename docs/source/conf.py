@@ -55,7 +55,6 @@ extensions = [
     "sphinx_togglebutton",
     "sphinx.ext.coverage",
     "sphinx.ext.linkcode",
-    "sphinx_search.extension",
     "sphinx_tippy",
     "sphinx_remove_toctrees",
     "sphinxcontrib.bibtex",
