@@ -95,7 +95,7 @@ myst_enable_checkboxes = True
 myst_heading_anchors = 3
 todo_include_todos = True
 
-link_resolver_url = "https://github.com/thespacedoctor/xxxpython_package_namexxx/blob/master"
+link_resolver_url = "https://github.com/thespacedoctor/xxxpython_package_namexxx/blob/main"
 
 remove_from_toctrees = ["utils/[!_]*"]
 
@@ -139,7 +139,7 @@ html_theme_options = {
     "light_logo": "thespacedoctor_icon_dark_circle.png",
     "dark_logo": "thespacedoctor_icon_white_circle.png",
     "source_repository": "https://github.com/thespacedoctor/xxxpython_package_namexxx/",
-    "source_branch": "master",
+    "source_branch": "main",
     "source_directory": "docs/source/",
 }
 html_favicon = "_images/favicon.ico"
