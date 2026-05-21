@@ -33,7 +33,7 @@ true
 The easiest way to install xxxpython_package_namexxx is to use `conda`:
 
 ``` bash
-conda create -n xxxpython_package_namexxx python=3.11 pip xxxpython_package_namexxx -c conda-forge
+conda create -n xxxpython_package_namexxx python=3.14 pip xxxpython_package_namexxx -c conda-forge
 conda activate xxxpython_package_namexxx
 ```
 

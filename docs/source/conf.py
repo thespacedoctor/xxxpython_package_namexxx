@@ -15,7 +15,9 @@ on_rtd = os.environ.get("READTHEDOCS") == "True"
 moduleDirectory = os.path.dirname(os.path.realpath(__file__))
 # GET PACKAGE __version__ INTO locals()
 exec(open(moduleDirectory + "/../../xxxpython_package_namexxx/__version__.py").read())
-sys.path.insert(0, os.path.abspath("../../xxxpython_package_namexxx/xxxpython_package_namexxx"))
+sys.path.insert(
+    0, os.path.abspath("../../xxxpython_package_namexxx/xxxpython_package_namexxx")
+)
 
 # General information about the project.
 now = datetime.now()
@@ -94,7 +96,9 @@ myst_enable_checkboxes = True
 myst_heading_anchors = 3
 todo_include_todos = True
 
-link_resolver_url = "https://github.com/thespacedoctor/xxxpython_package_namexxx/blob/master"
+link_resolver_url = (
+    "https://github.com/thespacedoctor/xxxpython_package_namexxx/blob/main"
+)
 
 remove_from_toctrees = ["utils/[!_]*"]
 
@@ -138,7 +142,7 @@ html_theme_options = {
     "light_logo": "thespacedoctor_icon_dark_circle.png",
     "dark_logo": "thespacedoctor_icon_white_circle.png",
     "source_repository": "https://github.com/thespacedoctor/xxxpython_package_namexxx/",
-    "source_branch": "master",
+    "source_branch": "main",
     "source_directory": "docs/source/",
 }
 html_favicon = "_images/favicon.ico"
@@ -155,7 +159,13 @@ html_add_permalinks = "  ∞"
 latex_engine = "xelatex"
 
 latex_documents = [
-    ("index", "xxxpython_package_namexxx.tex", "xxxpython_package_namexxx Documentation", "David R. Young", "manual"),
+    (
+        "index",
+        "xxxpython_package_namexxx.tex",
+        "xxxpython_package_namexxx Documentation",
+        "David R. Young",
+        "manual",
+    ),
 ]
 
 
@@ -177,7 +187,12 @@ def linkcode_resolve(domain, info):
             filename = ("/").join(filename.split("/")[0:-1]) + "/"
         else:
             filename = ""
-        filename += ("/").join(info["fullname"].split(".")[0:-1]) + ".py" + "#" + info["fullname"].split(".")[-1]
+        filename += (
+            ("/").join(info["fullname"].split(".")[0:-1])
+            + ".py"
+            + "#"
+            + info["fullname"].split(".")[-1]
+        )
     return link_resolver_url + "/" + filename
 
 

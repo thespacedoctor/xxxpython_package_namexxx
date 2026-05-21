@@ -1,7 +1,9 @@
 
 ## Release Notes
 
-<!-- **vx.x.x - xxdatexx** -->
+**v0.2.2 - May 21, 2026**
+
+- **FIXED:** fixing readline import for windows
 
 **v0.2.1 - May 12, 2026**
 

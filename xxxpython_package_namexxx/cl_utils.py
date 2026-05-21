@@ -5,31 +5,41 @@ Documentation for xxxpython_package_namexxx can be found here: http://xxxpython_
 
 Usage:
     xxxpython_package_namexxx init
-    xxxpython_package_namexxx [-s <pathToSettingsFile>]  
+    xxxpython_package_namexxx [-s <pathToSettingsFile>]
 
 Commands:
     init                                   setup the xxxpython_package_namexxx settings file for the first time
 
 Arguments:
 
-Options:    
+Options:
     -h, --help                             show this help message
     -v, --version                          show version
     -s, --settings <pathToSettingsFile>    the settings file
 """
+
 from subprocess import Popen, PIPE, STDOUT
 from fundamentals import tools, times
 from docopt import docopt
 import pickle
 import glob
-import readline
+
+try:
+    import readline
+except ImportError:
+    # Windows: readline not available in stdlib Optionally use pyreadline3 if installed
+    try:
+        import pyreadline3 as readline
+    except ImportError:
+        readline = None  # or just pass — basic input() still works
 import sys
 import os
-os.environ['TERM'] = 'vt100'
+
+os.environ["TERM"] = "vt100"
 
 
 def tab_complete(text, state):
-    return (glob.glob(text + '*') + [None])[state]
+    return (glob.glob(text + "*") + [None])[state]
 
 
 def main(arguments=None):
@@ -43,12 +53,12 @@ def main(arguments=None):
         logLevel="WARNING",
         options_first=False,
         projectName="xxxpython_package_namexxx",
-        defaultSettingsFile=True
+        defaultSettingsFile=True,
     )
     arguments, settings, log, dbConn = su.setup()
 
     # tab completion for raw_input
-    readline.set_completer_delims(' \t\n;')
+    readline.set_completer_delims(" \t\n;")
     readline.parse_and_bind("tab: complete")
     readline.set_completer(tab_complete)
 
@@ -64,13 +74,17 @@ def main(arguments=None):
         if arg == "--dbConn":
             dbConn = val
             a["dbConn"] = val
-        log.debug('%s = %s' % (varname, val,))
+        log.debug(
+            "%s = %s"
+            % (
+                varname,
+                val,
+            )
+        )
 
     ## START LOGGING ##
     startTime = times.get_now_sql_datetime()
-    log.info(
-        '--- STARTING TO RUN THE cl_utils.py AT %s' %
-        (startTime,))
+    log.info("--- STARTING TO RUN THE cl_utils.py AT %s" % (startTime,))
 
     # set options interactively if user requests
     if "interactiveFlag" in a and a["interactiveFlag"]:
@@ -102,6 +116,7 @@ def main(arguments=None):
 
     if a["init"]:
         from os.path import expanduser
+
         home = expanduser("~")
         filepath = home + "/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.yaml"
         try:
@@ -124,11 +139,16 @@ def main(arguments=None):
     ## FINISH LOGGING ##
     endTime = times.get_now_sql_datetime()
     runningTime = times.calculate_time_difference(startTime, endTime)
-    log.info('-- FINISHED ATTEMPT TO RUN THE cl_utils.py AT %s (RUNTIME: %s) --' %
-             (endTime, runningTime, ))
+    log.info(
+        "-- FINISHED ATTEMPT TO RUN THE cl_utils.py AT %s (RUNTIME: %s) --"
+        % (
+            endTime,
+            runningTime,
+        )
+    )
 
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
