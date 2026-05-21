@@ -23,7 +23,15 @@ from fundamentals import tools, times
 from docopt import docopt
 import pickle
 import glob
-import readline
+
+try:
+    import readline
+except ImportError:
+    # Windows: readline not available in stdlib Optionally use pyreadline3 if installed
+    try:
+        import pyreadline3 as readline
+    except ImportError:
+        readline = None  # or just pass — basic input() still works
 import sys
 import os
 
@@ -110,9 +118,7 @@ def main(arguments=None):
         from os.path import expanduser
 
         home = expanduser("~")
-        filepath = (
-            home + "/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.yaml"
-        )
+        filepath = home + "/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.yaml"
         try:
             cmd = """open %(filepath)s""" % locals()
             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
