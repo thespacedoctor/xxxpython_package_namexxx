@@ -118,7 +118,9 @@ def main(arguments=None):
         from os.path import expanduser
 
         home = expanduser("~")
-        filepath = home + "/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.yaml"
+        filepath = (
+            home + "/.config/xxxpython_package_namexxx/xxxpython_package_namexxx.yaml"
+        )
         try:
             cmd = """open %(filepath)s""" % locals()
             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
