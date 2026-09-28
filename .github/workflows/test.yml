@@ -1,16 +1,37 @@
 name: Tests
 
+# MAKE THIS A REQUIRED STATUS CHECK ON `main` SO RELEASE PULL REQUESTS
+# ONLY AUTO-MERGE WHEN THE SUITE PASSES.
 
-on: [tests]
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
 
 jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version-file: pyproject.toml
-            architecture: x64
-            check-latest: true
-      
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: pyproject.toml
+          architecture: x64
+          check-latest: true
+
+      - name: Install package and pytest
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install . pytest
+
+      - name: Run tests
+        run: python -m pytest
