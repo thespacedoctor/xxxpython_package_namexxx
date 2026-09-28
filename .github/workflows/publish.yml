@@ -1,27 +1,134 @@
 name: Publish to PyPI
 
+# RUNS ON EVERY PUSH TO MAIN. THE RELEASE IS COMPLETE ONLY WHEN THE GITHUB
+# RELEASE FOR THE VERSION IN __version__.py EXISTS:
+#   - NO TAG, NO RELEASE: TAG THE COMMIT, BUILD FROM THE TAG, PUBLISH, RELEASE.
+#   - TAG, NO RELEASE (AN EARLIER RUN FAILED PART WAY): BUILD FROM THE EXISTING
+#     TAG, PUBLISH (SKIPPING FILES ALREADY ON PYPI), RELEASE.
+#   - RELEASE EXISTS: DO NOTHING.
+# RUN IT BY HAND FROM THE ACTIONS TAB TO RESUME A FAILED RELEASE.
+#
+# KEEP THIS FILENAME: THE PYPI TRUSTED PUBLISHER IS REGISTERED AGAINST
+# `publish.yml` AND THE `release` ENVIRONMENT.
+#
+# PyPI publishing not yet supported in reusable workflows, see https://github.com/pypa/gh-action-pypi-publish/issues/166
+
 on:
   push:
-    tags:
-      - "v*"  # Triggers on tags like v0.1.0, v1.2.3
+    branches:
+      - main
+  workflow_dispatch:
 
-# PyPI publishing not yet supported in reusable workflows, see https://github.com/pypa/gh-action-pypi-publish/issues/166
-# jobs:
-#   call-workflow:
-#     uses: thespacedoctor/reusable-workflows/.github/workflows/publish.yml@main
+permissions:
+  contents: read
 
+concurrency:
+  group: publish-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Publish release to PyPI
+  check:
+    name: Check for an unreleased version
+    # A MANUAL RUN FROM ANY OTHER BRANCH MUST NOT RELEASE THAT BRANCH'S CODE
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      release: ${{ steps.version.outputs.release }}
+      needs_tag: ${{ steps.version.outputs.needs_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version and find what is already released
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION_FILE=$(python3 -c "import tomllib;print(tomllib.load(open('pyproject.toml','rb'))['tool']['setuptools_scm']['write_to'])")
+          VERSION=$(sed -nE "s/^__version__ *= *['\"]([^'\"]+)['\"].*/\1/p" "$VERSION_FILE")
+          # ONLY PLAIN X.Y.Z OR X.Y.Z{a,b,rc}N; THIS ALSO KEEPS THE VALUE SAFE FOR LATER SHELL STEPS
+          if ! printf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+((a|b|rc)[0-9]+)?$'; then
+            echo "::error::'$VERSION_FILE' holds an invalid release version: '$VERSION'"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+          # A DRAFT RELEASE IS NOT FINISHED; ANY ERROR OTHER THAN "NOT FOUND" STOPS THE RUN
+          if IS_DRAFT=$(gh release view "v$VERSION" --json isDraft --jq .isDraft 2>gh-error.txt); then
+            if [ "$IS_DRAFT" = "false" ]; then
+              echo "GitHub release v$VERSION is published. Nothing to release."
+              echo "release=false" >> "$GITHUB_OUTPUT"
+              echo "needs_tag=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "GitHub release v$VERSION is still a draft. Finishing it."
+          elif ! grep -qi "release not found" gh-error.txt; then
+            echo "::error::Could not check for GitHub release v$VERSION: $(cat gh-error.txt)"
+            exit 1
+          fi
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null; then
+            echo "Tag v$VERSION exists but has no GitHub release. Resuming from the tag."
+            echo "needs_tag=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_tag=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check the newest CHANGES.md heading is this version
+        if: steps.version.outputs.release == 'true'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          FIRST_HEADING=$(grep -m1 '^## v' CHANGES.md || true)
+          case "$FIRST_HEADING" in
+            "## v$VERSION "*) ;;
+            *)
+              echo "::error::The first '## v' heading in CHANGES.md must be '## v$VERSION - <date>', found '$FIRST_HEADING'"
+              exit 1
+              ;;
+          esac
+
+  tag:
+    name: Tag the release commit
+    needs: check
+    if: needs.check.outputs.needs_tag == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ needs.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create and push annotated tag
+        run: |
+          awk -v heading="## v$VERSION " 'index($0, heading) == 1 {found=1; next} found && /^## v/ {exit} found' CHANGES.md > release-notes.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -F release-notes.md "$GITHUB_SHA"
+          git push origin "v$VERSION"
+
+  build:
+    name: Build distributions
+    needs: [check, tag]
+    # RUNS AFTER A NEW TAG, OR ON ITS OWN WHEN RESUMING FROM AN EXISTING TAG
+    if: ${{ !cancelled() && needs.check.result == 'success' && needs.check.outputs.release == 'true' && needs.tag.result != 'failure' }}
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.check.outputs.version }}
     steps:
       - name: Act Workaround # https://github.com/nektos/act/issues/973
         if: ${{ env.ACT }}
         run: curl -fsSL https://deb.nodesource.com/setup_22.x | bash && apt install -y nodejs
+
+      # BUILD FROM THE TAG SO SETUPTOOLS_SCM PRODUCES THE EXACT RELEASE VERSION
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: v${{ needs.check.outputs.version }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -33,7 +140,22 @@ jobs:
         run: pip install build
 
       - name: Build package
-        run: python -m build 
+        run: python -m build
+
+      - name: Check built version matches the tag
+        run: |
+          ls dist/
+          for f in dist/*; do
+            case "$f" in
+              *-"$VERSION"-*|*-"$VERSION".tar.gz) ;;
+              *) echo "::error::$f does not carry version $VERSION"; exit 1 ;;
+            esac
+          done
+
+      - name: Extract release notes for this version
+        run: |
+          awk -v heading="## v$VERSION " 'index($0, heading) == 1 {found=1; next} found && /^## v/ {exit} found' CHANGES.md > release-notes.md
+          cat release-notes.md
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -41,44 +163,43 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Upload release notes
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release-notes.md
+
   publish:
-    name: Publish to PyPI
-    needs: build
+    name: Publish to PyPI and create GitHub release
+    needs: [check, build]
+    if: ${{ !cancelled() && needs.check.result == 'success' && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     environment: release
     permissions:
       contents: write
-      pull-requests: write
       id-token: write  # Required for OIDC trusted publishing
-
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          fetch-depth: 0
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
 
+      - name: Download release notes
+        uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           skip-existing: true
 
-      - name: Get tag message
-        id: tag_message
-        run: |
-          TAG_MSG=$(git tag -l --format='%(contents)' ${{ github.ref_name }})
-          echo "message<<EOF" >> $GITHUB_OUTPUT
-          echo "$TAG_MSG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ needs.check.outputs.version }}
+          name: v${{ needs.check.outputs.version }}
+          body_path: release-notes.md
+          draft: false
           files: dist/*  # attach the .whl and .tar.gz to the release
-          body: ${{ steps.tag_message.outputs.message }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
