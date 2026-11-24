@@ -1,6 +1,7 @@
 # Release Notes
 
 * **ENHANCEMENT**: `publish.yml` now runs on every push to `main`: when the version in `__version__.py` has no GitHub release, it tags the commit, builds from the tag, publishes to PyPI and creates the GitHub release; a failed release resumes from the existing tag via a manual run.
+* **ENHANCEMENT**: CI skips the test and check workflows when a change touches only `CHANGES.md`.
 * **DOCS**: `CHANGES.md` release headings now use the `## vX.Y.Z - Month D, YYYY` form that `publish.yml` reads.
 * **FIXED**: `test.yml` never ran because it triggered on a non-existent `tests` event; it now installs the package and runs pytest on pull requests to `main` and `develop` and on pushes to `develop`.
 
