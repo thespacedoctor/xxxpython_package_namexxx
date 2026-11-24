@@ -3,14 +3,20 @@ name: Tests
 # MAKE THIS A REQUIRED STATUS CHECK ON `main` SO RELEASE PULL REQUESTS
 # ONLY AUTO-MERGE WHEN THE SUITE PASSES.
 
+# A CHANGE THAT TOUCHES ONLY CHANGES.md SKIPS THIS WORKFLOW. IF "tests" IS MADE A REQUIRED CHECK,
+# A SKIPPED WORKFLOW LEAVES IT PENDING: SWITCH TO A JOB-LEVEL SKIP (SEE soxspipe's tests.yml) FIRST
 on:
   pull_request:
     branches:
       - main
       - develop
+    paths-ignore:
+      - "CHANGES.md"
   push:
     branches:
       - develop
+    paths-ignore:
+      - "CHANGES.md"
 
 permissions:
   contents: read
